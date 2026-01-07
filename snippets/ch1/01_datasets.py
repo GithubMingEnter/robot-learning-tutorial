@@ -4,7 +4,7 @@ from lerobot.datasets.streaming_dataset import StreamingLeRobotDataset
 
 delta_timestamps = {
     # 0.2, and 0.1 seconds *before* each frame
-    "observation.images.wrist_camera": [-0.2, -0.1, 0.0]
+    "observation.images.side": [-0.2, -0.1, 0.0]
 }
 
 # Optionally, use StreamingLeRobotDataset to avoid downloading the dataset
@@ -39,13 +39,13 @@ data_loader = torch.utils.data.DataLoader(
 # Iterate over the DataLoader in a training loop
 num_epochs = 1
 device = "cuda" if torch.cuda.is_available() else "cpu"
-
+print(f"Using device: {device}")
 for epoch in range(num_epochs):
     for batch in data_loader:
         # Move data to the appropriate device (e.g., GPU)
         observations = batch["observation.state"].to(device)
         actions = batch["action"].to(device)
-        images = batch["observation.images.wrist_camera"].to(device)
+        images = batch["observation.images.side"].to(device)
 
         # Next, you can do amazing_model.forward(batch)
         ...
